@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1107,981</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1107,1591</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="39">
@@ -108,10 +108,11 @@
       <AssemblyReference>System.Private.Uri</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="400,1041" sap2010:WorkflowViewState.IdRef="Sequence_5">
+  <Sequence sap:VirtualizedContainerService.HintSize="400,1526" sap2010:WorkflowViewState.IdRef="Sequence_5">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="customerChoice" />
       <Variable x:TypeArguments="x:String" Name="vendorChoice" />
+      <Variable x:TypeArguments="x:Int32" Name="customerItemRowIndex" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -125,12 +126,8 @@
     </ui:InputDialog>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Read Single Customer" sap:VirtualizedContainerService.HintSize="338,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="ReadCustomer.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_customer_dt">
-          <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_customer_dt" />
-        </OutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_customerName">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="customerChoice" />
-        </InArgument>
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_customer_dt">[io_customer_dt]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_customerName">[customerChoice]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InputDialog Options="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="338,292" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="False" Label="Which store's inventory would you like to see?" OptionsString="Mudbay;Ross;Albertsons" Title="Which Vendor">
@@ -140,11 +137,18 @@
     </ui:InputDialog>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Read Single Vendor" sap:VirtualizedContainerService.HintSize="338,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ReadVendor.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_vendor_dt">
-          <VisualBasicReference x:TypeArguments="sd:DataTable" ExpressionText="io_vendor_dt" />
-        </OutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_vendorName">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="vendorChoice" />
+        <OutArgument x:TypeArguments="sd:DataTable" x:Key="out_vendor_dt">[io_vendor_dt]</OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_vendorName">[vendorChoice]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[io_customer_dt]" DisplayName="Lookup Data Table" sap:VirtualizedContainerService.HintSize="338,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Name" LookupValue="Chicken" RowIndex="[customerItemRowIndex]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="BuyProductFromVendor.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="338,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="BuyProductFromVendor.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="sd:DataRow" x:Key="in_productRequest">
+          <VisualBasicValue x:TypeArguments="sd:DataRow" ExpressionText="io_customer_dt.Rows(customerItemRowIndex)" />
+        </InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_vendor_dt">
+          <VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="io_vendor_dt" />
         </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
