@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1107,1594</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1107,1466</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>BuyProductFromStore_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
@@ -93,7 +93,7 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="BuyProductFromVendor" sap:VirtualizedContainerService.HintSize="474,1529" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="BuyProductFromVendor" sap:VirtualizedContainerService.HintSize="474,1401" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="vendorItemRow" />
     </Sequence.Variables>
@@ -102,9 +102,21 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadRange AddHeaders="True" DataTable="[in_vendor_dt]" DisplayName="Read Range Workbook" sap:VirtualizedContainerService.HintSize="412,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" Range="A:C" SheetName="Albertsons" WorkbookPath="Vendors.xlsx" />
-    <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[in_vendor_dt]" DisplayName="Lookup Data Table" sap:VirtualizedContainerService.HintSize="412,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Item" LookupValue="[in_productRequest(0).ToString]" RowIndex="[vendorItemRow]" />
-    <If Condition="[vendorItemRow = -1]" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_1">
+    <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[in_vendor_dt]" DisplayName="Find Item's Row" sap:VirtualizedContainerService.HintSize="412,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Item" LookupValue="[in_productRequest(0).ToString]" RowIndex="[vendorItemRow]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:LookupDataTable>
+    <If Condition="[vendorItemRow = -1]" DisplayName="If - Item isn't carried by Vendor" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
       <If.Then>
         <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_2" Reason="[&quot;Item &quot; + in_productRequest(0).ToString + &quot; not carried by vendor.&quot;]">
           <sap:WorkflowViewStateService.ViewState>
@@ -116,7 +128,13 @@
         </TerminateWorkflow>
       </If.Then>
     </If>
-    <If Condition="[Convert.ToInt32(in_vendor_dt.Rows(vendorItemRow)(2)) &lt; Convert.ToInt32(in_productRequest(1))]" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_2">
+    <If Condition="[Convert.ToInt32(in_vendor_dt.Rows(vendorItemRow)(2)) &lt; Convert.ToInt32(in_productRequest(1))]" DisplayName="If - Item request exceeds Vendor's current stock" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
       <If.Then>
         <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_4" Reason="[&quot;Item &quot; + in_productRequest(0).ToString + &quot; not in stock.&quot;]">
           <sap:WorkflowViewStateService.ViewState>
