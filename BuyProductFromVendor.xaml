@@ -1,15 +1,17 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="BuyProductFromStore" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_productRequest" Type="InArgument(sd:DataRow)" />
+    <x:Property Name="in_productRequest_dr" Type="InArgument(sd:DataRow)" />
     <x:Property Name="in_vendor_dt" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_vendorName" Type="InArgument(x:String)" />
+    <x:Property Name="in_customerName" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1107,1466</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1107,1873</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>BuyProductFromStore_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="56">
+    <scg:List x:TypeArguments="x:String" Capacity="32">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -45,7 +47,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="90">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="46">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -93,16 +95,17 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="BuyProductFromVendor" sap:VirtualizedContainerService.HintSize="474,1401" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="BuyProductFromVendor" sap:VirtualizedContainerService.HintSize="474,1808" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="vendorItemRow" />
+      <Variable x:TypeArguments="x:Boolean" Name="itemInStock" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[in_vendor_dt]" DisplayName="Find Item's Row" sap:VirtualizedContainerService.HintSize="412,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Item" LookupValue="[in_productRequest(0).ToString]" RowIndex="[vendorItemRow]">
+    <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[in_vendor_dt]" DisplayName="Find Item's Row" sap:VirtualizedContainerService.HintSize="412,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Item" LookupValue="[in_productRequest_dr(0).ToString]" RowIndex="[vendorItemRow]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -118,7 +121,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_2" Reason="[&quot;Item &quot; + in_productRequest(0).ToString + &quot; not carried by vendor.&quot;]">
+        <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_2" Reason="[&quot;Item &quot; + in_productRequest_dr(0).ToString + &quot; not carried by vendor.&quot;]">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -128,7 +131,15 @@
         </TerminateWorkflow>
       </If.Then>
     </If>
-    <If Condition="[Convert.ToInt32(in_vendor_dt.Rows(vendorItemRow)(2)) &lt; Convert.ToInt32(in_productRequest(1))]" DisplayName="If - Item request exceeds Vendor's current stock" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_2">
+    <Assign sap:VirtualizedContainerService.HintSize="412,61" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Boolean">[itemInStock]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Boolean">[Convert.ToInt32(in_vendor_dt.Rows(vendorItemRow)(2)) &gt; Convert.ToInt32(in_productRequest_dr(1))]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <If Condition="[Not itemInStock]" DisplayName="If - Item request exceeds Vendor's current stock" sap:VirtualizedContainerService.HintSize="412,393" sap2010:WorkflowViewState.IdRef="If_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -136,7 +147,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_4" Reason="[&quot;Item &quot; + in_productRequest(0).ToString + &quot; not in stock.&quot;]">
+        <TerminateWorkflow DisplayName="Terminate Workflow" sap:VirtualizedContainerService.HintSize="334,117" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_4" Reason="[&quot;Item &quot; + in_productRequest_dr(0).ToString + &quot; not in stock.&quot;]">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -146,6 +157,41 @@
         </TerminateWorkflow>
       </If.Then>
     </If>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="412,92" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Item &quot; + in_productRequest(0).ToString + &quot; in stock and bought.&quot;]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SubtractItemStock.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="412,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="SubtractItemStock.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_vendorName">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_vendorName" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_itemQuantity">
+          <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Convert.ToInt32(in_productRequest_dr(1))" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_itemRow">
+          <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="vendorItemRow" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="AddItemToExpenseReport.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="412,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="AddItemToExpenseReport.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_customerName">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_customerName" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_itemPurchased">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_productRequest_dr(0).ToString" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_itemPrice">
+          <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Convert.ToInt32(in_vendor_dt.Rows(vendorItemRow)(1))" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Boolean" x:Key="in_itemInStock">
+          <VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="itemInStock" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_VendorName">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_vendorName" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_itemQuantity">
+          <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Convert.ToInt32(in_productRequest_dr(1))" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="412,92" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Item &quot; + in_productRequest_dr(0).ToString + &quot; in stock and bought.&quot;]" />
   </Sequence>
 </Activity>

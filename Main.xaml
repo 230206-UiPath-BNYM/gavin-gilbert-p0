@@ -144,8 +144,18 @@
     <ui:LookupDataTable CellValue="{x:Null}" LookupColumnIndex="{x:Null}" LookupDataColumn="{x:Null}" TargetColumnIndex="{x:Null}" TargetColumnName="{x:Null}" TargetDataColumn="{x:Null}" DataTable="[io_customer_dt]" DisplayName="Lookup Data Table" sap:VirtualizedContainerService.HintSize="338,292" sap2010:WorkflowViewState.IdRef="LookupDataTable_1" LookupColumnName="Item Name" LookupValue="Staff" RowIndex="[customerItemRowIndex]" />
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="BuyProductFromVendor.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="338,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="BuyProductFromVendor.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="sd:DataRow" x:Key="in_productRequest">[io_customer_dt.Rows(customerItemRowIndex)]</InArgument>
-        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_vendor_dt">[io_vendor_dt]</InArgument>
+        <InArgument x:TypeArguments="sd:DataRow" x:Key="in_productRequest_dr">
+          <VisualBasicValue x:TypeArguments="sd:DataRow" ExpressionText="io_customer_dt.Rows(customerItemRowIndex)" />
+        </InArgument>
+        <InArgument x:TypeArguments="sd:DataTable" x:Key="in_vendor_dt">
+          <VisualBasicValue x:TypeArguments="sd:DataTable" ExpressionText="io_vendor_dt" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_vendorName">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="vendorChoice" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_customerName">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="customerChoice" />
+        </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
   </Sequence>
