@@ -10,7 +10,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1107,2545</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1107,3102</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AddItemToExpenseReport_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -76,31 +76,31 @@
       <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="AddItemToExpenseReport" sap:VirtualizedContainerService.HintSize="732,2480" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="AddItemToExpenseReport" sap:VirtualizedContainerService.HintSize="828,3037" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="670,2369" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
+    <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Excel Process Scope" sap:VirtualizedContainerService.HintSize="766,2926" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_1">
       <ueab:ExcelProcessScopeX.Body>
         <ActivityAction x:TypeArguments="ui:IExcelProcess">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="636,2282" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="732,2839" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="574,2171" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="ExpenseReports.xlsx">
+            <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="670,2728" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_1" ResizeWindow="None" WorkbookPath="ExpenseReports.xlsx">
               <ueab:ExcelApplicationCard.Body>
                 <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="540,1902" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="636,2459" sap2010:WorkflowViewState.IdRef="Sequence_3">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Int32" Name="nextRow" />
                     </Sequence.Variables>
@@ -109,8 +109,8 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ueab:FindFirstLastDataRowX FirstRowIndex="{x:Null}" BlankRowsToSkip="1" ColumnName="Item" ConfigureLastRowAs="FirstEmptyRow" DisplayName="Find First/Last Data Row" FirstRowOffset="0" HasHeaders="True" sap:VirtualizedContainerService.HintSize="478,308" sap2010:WorkflowViewState.IdRef="FindFirstLastDataRowX_1" LastRowIndex="[nextRow]" LastRowOffset="0" Range="[Excel.Sheet(in_customerName)]" VisibleRowsOnly="False" />
-                    <If Condition="[nextRow = 0]" DisplayName="If - Expense Report is Empty" sap:VirtualizedContainerService.HintSize="478,448" sap2010:WorkflowViewState.IdRef="If_2">
+                    <ueab:FindFirstLastDataRowX FirstRowIndex="{x:Null}" BlankRowsToSkip="1" ColumnName="Item" ConfigureLastRowAs="FirstEmptyRow" DisplayName="Find First/Last Data Row" FirstRowOffset="0" HasHeaders="True" sap:VirtualizedContainerService.HintSize="574,308" sap2010:WorkflowViewState.IdRef="FindFirstLastDataRowX_1" LastRowIndex="[nextRow]" LastRowOffset="0" Range="[Excel.Sheet(in_customerName)]" VisibleRowsOnly="False" />
+                    <If Condition="[nextRow = 0]" DisplayName="If - Expense Report is Empty" sap:VirtualizedContainerService.HintSize="574,448" sap2010:WorkflowViewState.IdRef="If_2">
                       <If.Then>
                         <Sequence sap:VirtualizedContainerService.HintSize="400,172" sap2010:WorkflowViewState.IdRef="Sequence_5">
                           <sap:WorkflowViewStateService.ViewState>
@@ -129,11 +129,32 @@
                         </Sequence>
                       </If.Then>
                     </If>
-                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;A&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Item" sap:VirtualizedContainerService.HintSize="478,159" sap2010:WorkflowViewState.IdRef="WriteCellX_1" Value="[in_itemPurchased]" />
-                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;B&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Price" sap:VirtualizedContainerService.HintSize="478,159" sap2010:WorkflowViewState.IdRef="WriteCellX_2" Value="[in_itemPrice * in_itemQuantity]" />
-                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;C&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - In Stock" sap:VirtualizedContainerService.HintSize="478,159" sap2010:WorkflowViewState.IdRef="WriteCellX_3" Value="[in_itemInStock]" />
-                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;D&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Quantity" sap:VirtualizedContainerService.HintSize="478,159" sap2010:WorkflowViewState.IdRef="WriteCellX_4" Value="[in_itemQuantity]" />
-                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;E&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Store" sap:VirtualizedContainerService.HintSize="478,159" sap2010:WorkflowViewState.IdRef="WriteCellX_5" Value="[in_VendorName]" />
+                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;A&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Item" sap:VirtualizedContainerService.HintSize="574,159" sap2010:WorkflowViewState.IdRef="WriteCellX_1" Value="[in_itemPurchased]" />
+                    <If Condition="[in_itemInStock]" DisplayName="If - Item In Stock -&gt; Write Cell Price" sap:VirtualizedContainerService.HintSize="574,716" sap2010:WorkflowViewState.IdRef="If_3">
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="496,270" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;B&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Price" sap:VirtualizedContainerService.HintSize="434,159" sap2010:WorkflowViewState.IdRef="WriteCellX_2" Value="[in_itemPrice * in_itemQuantity]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence sap:VirtualizedContainerService.HintSize="496,270" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;B&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Price" sap:VirtualizedContainerService.HintSize="434,159" sap2010:WorkflowViewState.IdRef="WriteCellX_6" Value="[0]" />
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;C&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - In Stock" sap:VirtualizedContainerService.HintSize="574,159" sap2010:WorkflowViewState.IdRef="WriteCellX_3" Value="[in_itemInStock]" />
+                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;D&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Quantity" sap:VirtualizedContainerService.HintSize="574,159" sap2010:WorkflowViewState.IdRef="WriteCellX_4" Value="[in_itemQuantity]" />
+                    <ueab:WriteCellX Cell="[Excel.Sheet(in_customerName).Cell(&quot;E&quot; + Convert.ToString(nextRow))]" DisplayName="Write Cell - Store" sap:VirtualizedContainerService.HintSize="574,159" sap2010:WorkflowViewState.IdRef="WriteCellX_5" Value="[in_VendorName]" />
                   </Sequence>
                 </ActivityAction>
               </ueab:ExcelApplicationCard.Body>
