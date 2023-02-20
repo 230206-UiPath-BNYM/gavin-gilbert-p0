@@ -104,7 +104,7 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ueab:ReadCellValueX Cell="[Excel.Sheet(&quot;Alex's Armaments&quot;).Cell(&quot;C&quot; + (in_itemRow + 2).ToString)]" DisplayName="Read Cell Value" GetFormattedText="True" sap:VirtualizedContainerService.HintSize="444,159" sap2010:WorkflowViewState.IdRef="ReadCellValueX_1">
+                    <ueab:ReadCellValueX Cell="[Excel.Sheet(in_vendorName).Cell(&quot;C&quot; + (in_itemRow + 2).ToString)]" DisplayName="Read Cell Value" GetFormattedText="True" sap:VirtualizedContainerService.HintSize="444,159" sap2010:WorkflowViewState.IdRef="ReadCellValueX_2">
                       <ueab:ReadCellValueX.SaveTo>
                         <OutArgument x:TypeArguments="x:String">[itemStock]</OutArgument>
                       </ueab:ReadCellValueX.SaveTo>
